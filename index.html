@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Guess the Country ISO Code Quiz</title>
+        <style>
+            #country-box {
+                width: 300px;
+                height: 100px;
+                background-color: lightgray;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 24px;
+            }
+            #input-box {
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="country-box"></div>
+        <div id="input-box">
+            <label for="iso-input">Enter the ISO code:</label>
+            <input type="text" id="iso-input">
+            <button id="submit-button">Submit</button>
+        </div>
+        <script>
+            const countries = {
+                "Afghanistan": "AF",
+                "Îles Åland": "AX",
+                "Albanie": "AL",
+                "Algérie": "DZ",
+                "Samoa américaines": "AS",
+                "Andorre": "AD",
+                "Angola": "AO",
+                "Anguilla": "AI",
+                "Antarctique": "AQ",
+                "Antigua-et-Barbuda": "AG",
+                "Argentine": "AR",
+                "Arménie": "AM",
+                "Aruba": "AW",
+                "Australie": "AU",
+                "Autriche": "AT",
+                "Azerbaïdjan": "AZ",
+                "Bahamas": "BS",
+                "Bahreïn": "BH",
+                "Bangladesh": "BD",
+                "Barbade": "BB",
+                "Biélorussie": "BY",
+                "Belgique": "BE",
+                "Belize": "BZ",
+                "Bénin": "BJ",
+                "Bermudes": "BM",
+                "Bhoutan": "BT",
+                "Bolivie": "BO",
+                "Bosnie-Herzégovine": "BA",
+                "Botswana": "BW",
+                "Île Bouvet": "BV",
+                "Brésil": "BR",
+                "Territoire britannique de l'océan Indien": "IO",
+                "Brunei": "BN",
+                "Bulgarie": "BG",
+                "Burkina Faso": "BF",
+                "Burundi": "BI",
+                "Cambodge": "KH",
+                "Cameroun": "CM",
+                "Canada": "CA",
+                "Cap-Vert": "CV",
+                "Îles Caïmans": "KY",
+                "République centrafricaine": "CF",
+                "Tchad": "TD",
+                "Chili": "CL",
+                "Chine": "CN",
+                "Île Christmas": "CX",
+                "Îles Cocos (Keeling)": "CC",
+                "Colombie": "CO",
+                "Comores": "KM",
+                "Congo": "CG",
+                "République démocratique du Congo": "CD",
+                "Îles Cook": "CK",
+                "Costa Rica": "CR",
+                "Côte d'Ivoire": "CI",
+                "Croatie": "HR",
+                "Cuba": "CU",
+                "Chypre": "CY",
+                "République tchèque": "CZ",
+                "Danemark": "DK",
+                "Djibouti": "DJ",
+                "Dominique": "DM",
+                "République dominicaine": "DO",
+                "Équateur": "EC",
+                "Égypte": "EG",
+                "Salvador": "SV",
+                "Guinée équatoriale": "GQ",
+                "Érythrée": "ER",
+                "Estonie": "EE",
+                "Éthiopie": "ET",
+                "Îles Falkland (Malvinas)": "FK",
+                "Îles Féroé": "FO",
+                "Fidji": "FJ",
+                "Finlande": "FI",
+                "France": "FR",
+                "Guyane française": "GF",
+                "Polynésie française": "PF",
+                "Terres australes et antarctiques françaises": "TF",
+                "Gabon": "GA",
+                "Gambie": "GM",
+                "Géorgie": "GE",
+                "Allemagne": "DE",
+                "Ghana": "GH",
+                "Gibraltar": "GI",
+                "Grèce": "GR",
+                "Groenland": "GL",
+                "Grenade": "GD",
+                "Guadeloupe": "GP",
+                "Guam": "GU",
+                "Guatemala": "GT",
+                "Guernesey": "GG",
+                "Guinée": "GN",
+                "Guinée-Bissau": "GW",
+                "Guyana": "GY",
+                "Haïti": "HT",
+                "Îles Heard-et-MacDonald": "HM",
+                "Saint-Siège": "VA",
+                "Honduras": "HN",
+                "Hong Kong": "HK",
+                "Hongrie": "HU",
+                "Islande": "IS",
+                "Inde": "IN",
+                "Indonésie": "ID",
+                "Iran (République islamique d')": "IR",
+                "Iraq": "IQ",
+                "Irlande": "IE",
+                "Île de Man": "IM",
+                "Israël": "IL",
+                "Italie": "IT",
+                "Jamaïque": "JM",
+                "Japon": "JP",
+                "Japon": "JP",
+                "Jersey": "JE",
+                "Jordanie": "JO",
+                "Kazakhstan": "KZ",
+                "Kenya": "KE",
+                "Kiribati": "KI",
+                "Corée (République de)": "KR",
+                "Koweït": "KW",
+                "Kirghizistan": "KG",
+                "République démocratique populaire lao": "LA",
+                "Lettonie": "LV",
+                "Liban": "LB",
+                "Lesotho": "LS",
+                "Liberia": "LR",
+                "Libye": "LY",
+                "Liechtenstein": "LI",
+                "Lituanie": "LT",
+                "Luxembourg": "LU",
+                "Macao": "MO",
+                "Macédoine du Nord": "MK",
+                "Madagascar": "MG",
+                "Malawi": "MW",
+                "Malaisie": "MY",
+                "Maldives": "MV",
+                "Mali": "ML",
+                "Malte": "MT",
+                "Îles Marshall": "MH",
+                "Martinique": "MQ",
+                "Mauritanie": "MR",
+                "Maurice": "MU",
+                "Mayotte": "YT",
+                "Mexique": "MX",
+                "Micronésie (États fédérés de)": "FM",
+                "Moldova (République de)": "MD",
+                "Monaco": "MC",
+                "Mongolie": "MN",
+                "Monténégro": "ME",
+                "Montserrat": "MS",
+                "Maroc": "MA",
+                "Mozambique": "MZ",
+                "Myanmar": "MM",
+                "Namibie": "NA",
+                "Nauru": "NR",
+                "Népal": "NP",
+                "Pays-Bas": "NL",
+                "Nouvelle-Calédonie": "NC",
+                "Nouvelle-Zélande": "NZ",
+                "Nicaragua": "NI",
+                "Niger": "NE",
+                "Nigeria": "NG",
+                "Nioué": "NU",
+                "Île Norfolk": "NF",
+                "Îles Mariannes du Nord": "MP",
+                "Norvège": "NO",
+                "Oman": "OM",
+                "Pakistan": "PK",
+                "Palaos": "PW",
+                "Palestine, État de": "PS",
+                "Panama": "PA",
+                "Papouasie-Nouvelle-Guinée": "PG",
+                "Paraguay": "PY",
+                "Pérou": "PE",
+                "Philippines": "PH",
+                "Pitcairn": "PN",
+                "Pologne": "PL",
+                "Portugal": "PT",
+                "Porto Rico": "PR",
+                "Qatar": "QA",
+                "Réunion": "RE",
+                "Roumanie": "RO",
+                "Russie (Fédération de)": "RU",
+                "Rwanda": "RW",
+                "Saint-Barthélemy": "BL",
+                "Sainte-Hélène, Ascension et Tristan da Cunha": "SH",
+                "Saint-Christophe-et-Niévès": "KN",
+                "Sainte-Lucie": "LC",
+                "Saint-Martin (partie française)": "MF",
+                "Saint-Pierre-et-Miquelon": "PM",
+                "Saint-Vincent-et-les Grenadines": "VC",
+                "Samoa": "WS",
+                "Saint-Marin": "SM",
+                "Sao Tomé-et-Principe": "ST",
+                "Arabie saoudite": "SA",
+                "Sénégal": "SN",
+                "Serbie": "RS",
+                "Seychelles": "SC",
+                "Sierra Leone": "SL",
+                "Singapour": "SG",
+                "Saint-Martin (partie néerlandaise)": "SX",
+                "Slovaquie": "SK",
+                "Slovénie": "SI",
+                "Îles Salomon": "SB",
+                "Somalie": "SO",
+                "Afrique du Sud": "ZA",
+                "Géorgie du Sud-et-les Îles Sandwich du Sud": "GS",
+                "Soudan du Sud": "SS",
+                "Espagne": "ES",
+                "Sri Lanka": "LK",
+                "Soudan": "SD",
+                "Suriname": "SR",
+                "Svalbard et Jan Mayen": "SJ",
+                "Suède": "SE",
+                "Suisse": "CH",
+                "République arabe syrienne": "SY",
+                "Taiwan, Province de Chine": "TW",
+                "Tadjikistan": "TJ",
+                "Tanzanie, République-Unie de": "TZ",
+                "Thaïlande": "TH",
+                "Timor-Leste": "TL",
+                "Togo": "TG",
+                "Tokelau": "TK",
+                "Tonga": "TO",
+                "Trinité-et-Tobago": "TT",
+                "Tunisie": "TN",
+                "Turquie": "TR",
+                "Turkménistan": "TM",
+                "Îles Turks-et-Caïcos": "TC",
+                "Tuvalu": "TV",
+                "Ouganda": "UG",
+                "Ukraine": "UA",
+                "Émirats arabes unis": "AE",
+                "Royaume-Uni de Grande-Bretagne et d'Irlande du Nord": "GB",
+                "États-Unis d'Amérique": "US",
+                "Îles mineures éloignées des États-Unis": "UM",
+                "Uruguay": "UY",
+                "Ouzbékistan": "UZ",
+                "Vanuatu": "VU",
+                "Venezuela (République bolivarienne du)": "VE",
+                "Viet Nam": "VN",
+                "Îles Vierges britanniques": "VG",
+                "Îles Vierges des États-Unis": "VI",
+                "Wallis-et-Futuna": "WF",
+                "Sahara occidental": "EH",
+                "Yémen": "YE",
+                "Zambie": "ZM",
+                "Zimbabwe": "ZW"
+            }
+        
+            const countryBox = document.getElementById('country-box');
+            const isoInput = document.getElementById('iso-input');
+            const submitButton = document.getElementById('submit-button');
+        
+            // Mettre à jour le contenu du rectangle avec un pays aléatoire
+            function updateCountryBox() {
+                const paysAleatoire = Object.keys(countries)[Math.floor(Math.random() * Object.keys(countries).length)];
+                // Affichage du nom du pays aléatoire
+                document.getElementById("country-box").textContent = paysAleatoire;
+            }
+        
+            // Vérifier la réponse de l'utilisateur lorsqu'il clique sur le bouton "Submit"
+            function checkAnswer() {
+                const pays = countryBox.textContent
+                const codeISO = countries[pays];
+                const userAnswer = isoInput.value.toUpperCase();
+        
+                if (userAnswer === codeISO) {
+                    alert('Correct!');
+                } else {
+                    alert('Incorrect. The correct answer is: ' + randomCountry.code);
+                }
+        
+                // Mettre à jour le contenu du rectangle avec un nouveau pays aléatoire
+                updateCountryBox();
+                isoInput.value = '';
+            }
+        
+            // Mettre à jour le contenu du rectangle avec un pays aléatoire au chargement de la page
+            updateCountryBox();
+        
+            // Vérifier la réponse de l'utilisateur lorsque le bouton "Submit" est cliqué
+            submitButton.addEventListener('click', checkAnswer);
+        </script>
+    </body>
+</html>
