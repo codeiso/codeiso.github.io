@@ -2,28 +2,26 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>Guess the Country ISO Code Quiz</title>
-        <style>
-            #country-box {
-                width: 300px;
-                height: 100px;
-                background-color: lightgray;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 24px;
-            }
-            #input-box {
-                margin-top: 10px;
-            }
-        </style>
+        <link rel="stylesheet" href="style.css">
+        <title>ISO Code Game !</title>
     </head>
     <body>
-        <div id="country-box"></div>
-        <div id="input-box">
-            <label for="iso-input">Enter the ISO code:</label>
-            <input type="text" id="iso-input">
-            <button id="submit-button">Submit</button>
+        <div class="login-box">
+            <label id="country-box" for="iso-input">></label>
+            <div class="input-container">
+                <input id="iso-input" placeholder="Entrer le code ISO" type="text" required=""/>
+            </div>
+            <div class=promo>
+                <a id="envoyer" class="secondary butt">Envoyer
+                </a>
+                <a id="passer" class="primary butt">Passer
+                </a>
+            </div>
+            <div class=promo>
+                <a id="confirmation-message">
+                    La réponse est correcte !
+                </a>
+            </div>
         </div>
         <script>
             const countries = {
@@ -274,10 +272,12 @@
                 "Zambie": "ZM",
                 "Zimbabwe": "ZW"
             }
-        
+            const confirmationMessage = document.getElementById("confirmation-message");
             const countryBox = document.getElementById('country-box');
             const isoInput = document.getElementById('iso-input');
-            const submitButton = document.getElementById('submit-button');
+            const passerButton = document.getElementById('passer');
+            const envoyerButton = document.getElementById('envoyer');
+            const confirmationButton = document.getElementById('confirmation-message');
         
             // Mettre à jour le contenu du rectangle avec un pays aléatoire
             function updateCountryBox() {
@@ -293,21 +293,27 @@
                 const userAnswer = isoInput.value.toUpperCase();
         
                 if (userAnswer === codeISO) {
-                    alert('Correct!');
+                    updateCountryBox();
+                    isoInput.value = '';
+                    confirmationMessage.style.display = "block";
                 } else {
-                    alert('Incorrect. The correct answer is: ' + randomCountry.code);
+                    isoInput.value = '';
                 }
         
                 // Mettre à jour le contenu du rectangle avec un nouveau pays aléatoire
-                updateCountryBox();
-                isoInput.value = '';
             }
-        
+
+            function remettreJeu() {
+                confirmationMessage.style.display = "none";
+            }
+
             // Mettre à jour le contenu du rectangle avec un pays aléatoire au chargement de la page
             updateCountryBox();
         
             // Vérifier la réponse de l'utilisateur lorsque le bouton "Submit" est cliqué
-            submitButton.addEventListener('click', checkAnswer);
+            passerButton.addEventListener('click', updateCountryBox);
+            envoyerButton.addEventListener('click', checkAnswer);
+            confirmationButton.addEventListener('click', remettreJeu);
         </script>
     </body>
 </html>
