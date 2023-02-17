@@ -2,6 +2,8 @@ html {
     height: 100%;
 }
 body {
+    height: 500px;
+    width: auto;
     margin:0;
     padding:0;
     font-family: sans-serif;
@@ -12,7 +14,8 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 400px;
+    height: 75%;
+    width: 75%;
     padding: 40px;
     transform: translate(-50%, -50%);
     background: rgba(0,0,0,.5);
